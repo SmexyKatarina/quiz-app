@@ -1,21 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 import '../css/Quizzes.css';
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { getAllQuizzes } from "../slices/quizzesSlice";
 
 const Quizzes = () => {
     
-    return (
-        <div id="quizzes">
-            <Header />
-            <div id="quizzes-container">
-                
+    const dispatch = useAppDispatch();
+    const state = useAppSelector(state => state.quizzes)
+
+    useEffect(() => {
+        dispatch(getAllQuizzes());
+    }, [dispatch]);
+
+
+
+    if (state.status === "error") {
+        return (
+            <div id="quizzes">
+                <Header />
+                <div id="quizzes-container">
+                    <h1>Error: {state.error}</h1>
+                </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
-    );
+        );
+    } else if (state.status === "loading") {
+        return (
+            <div id="quizzes">
+                <Header />
+                <div id="quizzes-container">
+                    <h1>Loading...</h1>
+                </div>
+                <Footer />
+            </div>
+        );
+    } else {
+        return (
+            <div id="quizzes">
+                <Header />
+                <div id="quizzes-container">
+                    { }
+                </div>
+                <Footer />
+            </div>
+        );
+    }
 }
 
 export default Quizzes;

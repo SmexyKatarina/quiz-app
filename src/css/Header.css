@@ -19,14 +19,14 @@
     cursor: pointer;
 }
 
-#quizzes {
+#quizzes-button {
     border-left: 1px solid black;
     border-right: 1px solid black;
     height: 100%;
     padding: 5px;
 }
 
-#quizzes:hover {
+#quizzes-button:hover {
     background-color: rgb(150, 150, 150);
     color: black;
     cursor: pointer;

@@ -1,30 +1,48 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAppSlice } from "../app/createAppSlice";
 
 export interface QuizState {
-    quizName: string,
-    questions: number[],
-    status: "idle" | "loading" | "error"
+    quizzes: {}[],
+    status: "idle" | "loading" | "error",
+    error: any
 }
 
 const initialState: QuizState = {
-    quizName: "",
-    questions: [],
-    status: "idle"
+    quizzes: [],
+    status: "idle",
+    error: ""
 }
+
+export const getAllQuizzes = createAsyncThunk(
+    "quizzes/getAllQuizzes",
+    async (_, { rejectWithValue }) => {
+        const json = await fetch("http://localhost:3001/quizzes")
+            .then(res => res.json());
+        if (json.error) {
+            return rejectWithValue(json.error);
+        } else {
+            return json;
+        }
+    }
+);
 
 export const quizSlice = createAppSlice({
     name: "quizzes",
     initialState,
-    reducers: create => ({
-        getQuiz: create.asyncThunk(async (quiz: { quizName: string, questions: number[] }) => {
-            return quiz;
-        }, {
-            pending: state => { state.status = "loading" },
-            fulfilled: (state, { payload }) => { state.status = "idle"; state.quizName = payload.quizName, state.questions = payload.questions },
-            rejected: state => { state.status = "error" }
-        }),
-    })
+    reducers: {},
+    extraReducers: builder => {
+        builder.addCase(getAllQuizzes.fulfilled, (state: QuizState, action) => {
+            state.quizzes = action.payload;
+            state.status = "idle";
+        })
+        .addCase(getAllQuizzes.rejected, (state: QuizState, action) => {
+            state.error = action.payload;
+            state.status = "error";
+        })
+        .addCase(getAllQuizzes.pending, (state: QuizState) => {
+            state.status = "loading";
+        })
+    }
 });
 
-export const userActions = quizSlice.actions;
 export default quizSlice.reducer;

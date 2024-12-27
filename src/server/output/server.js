@@ -4,18 +4,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const usersDb_1 = require("./users/usersDb");
+const usersDb_1 = require("./db/usersDb");
+const quizzesDb_1 = require("./db/quizzesDb");
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 const port = 3001;
 app.use((0, cors_1.default)());
-app.get("/", async (req, res) => {
-    const user = await (0, usersDb_1.getUser)("Hello");
+app.get("/", async (req, res, next) => {
+    const user = await (0, usersDb_1.getUser)("");
     if (user.count === 0) {
         res.status(404).send("No user found");
-        return;
+        return next;
     }
     res.status(200).send(`Welcome ${user[0].username}`);
+});
+app.get("/quizzes", async (req, res, next) => {
+    const quizzes = await (0, quizzesDb_1.getAllQuizzes)();
+    if (quizzes.count === 0) {
+        res.status(404).json({ error: "No quizzes found" });
+        return next;
+    }
+    res.status(200).send({ ...quizzes });
 });
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

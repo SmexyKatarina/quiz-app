@@ -1,4 +1,4 @@
-import sql from "../db";
+import sql from "./db";
 
 export const getUser = async (username: string) => {
     const res = await sql`
@@ -15,5 +15,7 @@ export const createUser = async (username: string, password: string) => {
     const res = await sql`
         insert into users 
             (username, password)
+        values (${username}, ${password});
     `
+    return res;
 }
