@@ -1,0 +1,30 @@
+#home {
+    background-color: rgb(240, 240, 240);
+    height: 100vh;
+}
+
+#home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(240, 240, 240);
+    color: rgb(40, 40, 40);
+    padding-bottom: 20px;
+    height: 80vh;
+}
+
+#home-container > * {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    margin: 20px;
+    width: 80%;
+    border-bottom: 1px solid black;
+}
+
+.section-description {
+    font-style: italic;
+}
+

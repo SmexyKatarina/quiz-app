@@ -20,7 +20,7 @@ export const quizSlice = createAppSlice({
             return quiz;
         }, {
             pending: state => { state.status = "loading" },
-            fulfilled: (state, { payload }) => { state.status = "idle"; state.quizName = payload.quizName, state.questions = payload.questions},
+            fulfilled: (state, { payload }) => { state.status = "idle"; state.quizName = payload.quizName, state.questions = payload.questions },
             rejected: state => { state.status = "error" }
         }),
     })

@@ -3,6 +3,7 @@ import '../css/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from '../pages/Home';
+import Quizzes from '../pages/Quizzes';
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
+          <Route path="quizzes" element={<Quizzes />}/>
         </Route>
       </Routes>
     </BrowserRouter>

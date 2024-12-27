@@ -6,8 +6,9 @@ const Header = () => {
     
     return (
         <div id="header">
-            <h3 className="icon">QuizIt</h3>
-            
+            <h4 id="quiz-icon">QuizIt</h4>
+            <h4 id="quizzes">Quizzes</h4>
+            <h4 id="login">Login</h4>
         </div>
     );
 }
