@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from '../pages/Home';
 import Quizzes from '../pages/Quizzes';
+import Error from '../pages/Error';
 
 function App() {
 

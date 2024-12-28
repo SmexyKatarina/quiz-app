@@ -1,10 +1,10 @@
 import React from "react";
 
-const Component = () => {
+const Error = () => {
     
     return (
         <div></div>
     );
 }
 
-export default Component;
+export default Error;

@@ -2,13 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAppSlice } from "../app/createAppSlice";
 
 export interface QuizState {
-    quizzes: {}[],
+    quizzes: { [propName: number]: { quiz_name: string, quiz_category: number, username: string }},
     status: "idle" | "loading" | "error",
     error: any
 }
 
 const initialState: QuizState = {
-    quizzes: [],
+    quizzes: {},
     status: "idle",
     error: ""
 }

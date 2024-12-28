@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 
 import Header from "../components/Header";
+
+import QuizTile from '../components/Quiz-Tile';
+
 import Footer from "../components/Footer";
 
 import '../css/Quizzes.css';
@@ -16,7 +19,7 @@ const Quizzes = () => {
         dispatch(getAllQuizzes());
     }, [dispatch]);
 
-
+    console.log(state.quizzes);
 
     if (state.status === "error") {
         return (
@@ -43,7 +46,7 @@ const Quizzes = () => {
             <div id="quizzes">
                 <Header />
                 <div id="quizzes-container">
-                    { }
+                    { Object.entries(state.quizzes).map(([_, value], i) => <QuizTile key={i} quizData={value}/>) }
                 </div>
                 <Footer />
             </div>
