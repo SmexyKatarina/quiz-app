@@ -5,6 +5,8 @@ import '../css/Home.css';
 
 const Home = () => {
 
+    document.title = "Home - QuizIt";
+
     return (
         <div id="home">
             <Header />

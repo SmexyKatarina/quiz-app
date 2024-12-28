@@ -19,7 +19,7 @@ const Quizzes = () => {
         dispatch(getAllQuizzes());
     }, [dispatch]);
 
-    console.log(state.quizzes);
+    document.title = "Quizzes - QuizIt";
 
     if (state.status === "error") {
         return (

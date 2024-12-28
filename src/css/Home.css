@@ -11,7 +11,8 @@
     background-color: rgb(240, 240, 240);
     color: rgb(40, 40, 40);
     padding-bottom: 20px;
-    height: 80vh;
+    position: relative;
+    top: 20%;
 }
 
 #home-container > * {
