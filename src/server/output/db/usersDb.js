@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = exports.getUser = void 0;
 const db_1 = __importDefault(require("./db"));
 const getUser = async (username) => {
+    console.log("Searching DB");
     const res = await (0, db_1.default) `
         select
             username,

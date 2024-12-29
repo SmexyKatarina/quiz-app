@@ -1,6 +1,7 @@
 import sql from "./db";
 
 export const getUser = async (username: string) => {
+    console.log("Searching DB");
     const res = await sql`
         select
             username,

@@ -15,6 +15,7 @@ const getAllQuizzes = () => {
             users
         ON
             quizzes.user_id = users.user_id
+        LIMIT 9;
     `;
     return res;
 };
