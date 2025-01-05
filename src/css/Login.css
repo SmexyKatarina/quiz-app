@@ -1,0 +1,22 @@
+#login-page {
+    height: 100vh;
+}
+
+#login-container {
+    position: relative;
+    top: 25%;
+    margin: 0 auto;
+    width: 50%;
+    border: 1px solid black;
+}
+
+#login-container > * {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    align-items: center;
+}
+
+#login-inputs * {
+    margin-bottom: 5px;
+}

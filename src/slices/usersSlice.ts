@@ -18,24 +18,14 @@ const initialState: UserState = {
 export const authenticateUser = createAsyncThunk(
     "users/authenticateUser",
     async ({username, password}: { username: string, password: string}, { rejectWithValue }) => {
-        console.log("Into Authing");
-        const user = await fetch(`http://localhost:3001/users/getUser/${username}`)
+        const user = await fetch(`http://localhost:3001/users/getUser/`, { headers: { "Authorization": `Basic ${btoa(`${username}:${password}`)}` }})
             .then(res => res.json());
+            console.log(user);
         if (user.error) {
             return rejectWithValue(user.error);
         } else {
-            console.log("User info retrieved");
-            console.log(user);
             return user[0].username;
         }
-        // CHECK USER
-        /*
-        else if (user password incorrect) {
-            return rejectWithValue("Incorrect password.");
-        } else (user password correct) {
-            return username; 
-        }
-        */
     }
 )
 

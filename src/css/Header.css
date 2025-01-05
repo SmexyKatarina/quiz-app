@@ -4,11 +4,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: rgb(50, 50, 50);
+    color: rgb(80, 80, 80);
 }
 
 #header * {
     transition: all 0.1s;
+}
+
+#user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+#user-info * {
+    border-left: 1px solid black;
+    padding: 5px;
+}
+
+#user-info *:hover {
+    background-color: rgb(150, 150, 150);
+    color: black;
+    cursor: pointer;
 }
 
 #quiz-icon {
