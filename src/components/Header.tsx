@@ -25,8 +25,8 @@ const Header = () => {
         return (
             <div id="header">
                 <h4 id="quiz-icon" onClick={() => { navigate("/"); }}>QuizIt</h4>
+                <h4 id="quizzes-button" onClick={() => { navigate("/quizzes"); }}>Quizzes</h4>  
                 <div id="user-info">
-                    <h4 id="header-user">Welcome, {state.username}!</h4>
                     <h4 id="header-profile">Profile</h4>
                     <h4 id="login" onClick={() => { dispatch(userActions.deauthenticateUser()); }}>Logout</h4>
                 </div>
