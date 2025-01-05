@@ -1,7 +1,15 @@
 import sql from "./db";
 
+export const getAllUsers = async () => {
+    const res = await sql`
+        select 
+            username
+        from users    
+    `
+    return res;
+}
+
 export const getUser = async (username: string) => {
-    console.log("Searching DB");
     const res = await sql`
         select
             username,
@@ -20,3 +28,4 @@ export const createUser = async (username: string, password: string) => {
     `
     return res;
 }
+

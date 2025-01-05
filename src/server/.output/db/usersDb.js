@@ -3,10 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.getUser = void 0;
+exports.createUser = exports.getUser = exports.getAllUsers = void 0;
 const db_1 = __importDefault(require("./db"));
+const getAllUsers = async () => {
+    const res = await (0, db_1.default) `
+        select 
+            username
+        from users    
+    `;
+    return res;
+};
+exports.getAllUsers = getAllUsers;
 const getUser = async (username) => {
-    console.log("Searching DB");
     const res = await (0, db_1.default) `
         select
             username,

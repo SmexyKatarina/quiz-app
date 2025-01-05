@@ -11,33 +11,31 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const app = (0, express_1.default)();
 const port = 3001;
 app.use((0, cors_1.default)());
-app.use((req, res, next) => {
-    console.log(req.headers);
-    return next();
-});
-app.get("/", async (req, res, next) => {
-    const user = await (0, usersDb_1.getUser)("");
-    if (user.count === 0) {
-        res.status(404).send("No user found");
-        return next();
-    }
-    res.status(200).send(`Welcome ${user[0].username}`);
-});
 app.get("/quizzes", async (req, res, next) => {
     const quizzes = await (0, quizzesDb_1.getAllQuizzes)();
-    console.log("Quizzes perhaps?");
     if (quizzes.count === 0) {
         res.status(404).json({ error: "No quizzes found" });
         return next();
     }
     res.status(200).json({ ...quizzes });
+    return next();
+});
+app.get("/users/getUsers/", async (req, res, next) => {
+    const users = await (0, usersDb_1.getAllUsers)();
+    if (users.count === 0) {
+        res.status(404).json({ error: "No users found" });
+        return next();
+    }
+    res.status(200).json({
+        usernames: users
+    });
+    return next();
 });
 app.get("/users/getUser/", async (req, res, next) => {
     if (!req.headers.authorization) {
         res.status(401).json({ error: "No credentials" });
         return next();
     }
-    console.log(bcrypt_1.default.hashSync("admin", 10));
     const [username, password] = atob(req.headers.authorization.split(" ")[1]).split(":");
     const user = await (0, usersDb_1.getUser)(username);
     if (user.count === 0) {
