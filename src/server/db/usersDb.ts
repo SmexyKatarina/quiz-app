@@ -2,30 +2,46 @@ import sql from "./db";
 
 export const getAllUsers = async () => {
     const res = await sql`
-        select 
+        SELECT 
             username
-        from users    
+        FROM 
+            users;
     `
     return res;
 }
 
 export const getUser = async (username: string) => {
     const res = await sql`
-        select
+        SELECT
             username,
             password
-        from users
-        where username = ${username}
+        FROM 
+            users
+        WHERE 
+            username = ${username};
     `
     return res;
 }
 
 export const createUser = async (username: string, password: string) => {
     const res = await sql`
-        insert into users 
-            (username, password)
-        values (${username}, ${password});
+        INSERT INTO 
+            users (username, password)
+        VALUES 
+            (${username}, ${password});
     `
     return res;
 }
+
+export const deleteUser = async (username: string) => {
+    const res = await sql`
+        DELETE FROM 
+            users 
+        WHERE 
+            username = ${username}
+        RETURNING
+            user_id;
+    `
+    return res;
+}   
 

@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, NextFunction } from "express";
-import { getUser, getAllUsers } from "./db/usersDb";
+import { getUser, getAllUsers, deleteUser } from "./db/usersDb";
 import { getAllQuizzes } from "./db/quizzesDb";
 import cors from "cors";
 import bcrypt from "bcrypt";
@@ -40,8 +40,9 @@ app.get("/users/getUser/", async (req: Request, res: Response, next: NextFunctio
     }
     const [username, password] = atob(req.headers.authorization.split(" ")[1]).split(":");
     const user = await getUser(username);
+    console.log(user.state);
     if (user.count === 0) {
-        res.status(404).json({ error: "No user found" });
+        res.status(401).json({ error: "No user found" });
         return next();
     }
     const compare = await bcrypt.compare(password, user[0].password);
@@ -52,8 +53,21 @@ app.get("/users/getUser/", async (req: Request, res: Response, next: NextFunctio
         res.status(401).json({ error: "Incorrect password" });
         return next();
     }
-    
 })
+
+app.delete("/users/deleteUser/:username", async (req: Request, res: Response, next: NextFunction) => {
+    const username = req.params.username;
+    
+    const delUser = await deleteUser(username);
+    
+    if (delUser.count === 0) {
+        res.status(410).json({ error: "User doesn't exist" });
+        return next();
+    } else {
+        res.status(200).json({ message: "User has been deleted" });
+        return next();
+    }
+});
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAppSlice } from "../app/createAppSlice";
+import { error } from "console";
 
 export interface UserState {
     username: string,
@@ -21,9 +22,18 @@ const initialState: UserState = {
     error: ""  
 } */
 
+const errorReducer = (state: UserState, action: any) => {
+    state.error = action.payload.error;
+    state.status = "error";
+}
+
+const pendingReducer = (state: UserState, action: any) => {
+    state.status = "loading";
+}
+
 export const authenticateUser = createAsyncThunk(
     "users/authenticateUser",
-    async ({username, password}: { username: string, password: string}, { rejectWithValue }) => {
+    async ({username, password}: { username: string, password: string }, { rejectWithValue }) => {
         const user = await fetch(`http://localhost:3001/users/getUser/`, { headers: { "Authorization": `Basic ${btoa(`${username}:${password}`)}` }})
             .then(res => res.json());
         if (user.error) {
@@ -57,6 +67,20 @@ export const createUser = createAsyncThunk(
     }
 );
 
+export const deleteUser = createAsyncThunk(
+    "users/deleteUser",
+    async ({username} : { username: string }, { rejectWithValue }) => {
+        const deleted = await fetch(`http://localhost:3001/users/deleteUser/${username}`)
+            .then(res => res.json());
+        if (deleted.error) {
+            return rejectWithValue(deleted.error);
+        } else {
+            return true;
+        }
+
+    }
+);
+
 export const userSlice = createAppSlice({
     name: "users",
     initialState,
@@ -67,30 +91,33 @@ export const userSlice = createAppSlice({
         }
     },
     extraReducers: builder => {
+
+        // AUTHENTICATE USER
         builder.addCase(authenticateUser.fulfilled, (state: UserState, action) => {
             state.username = action.payload;
             state.status = "idle";
             state.authenticated = true;
         })
-        .addCase(authenticateUser.rejected, (state: UserState, action) => {
-            state.status = "error";
-            state.error = action.payload;
-        })
-        .addCase(authenticateUser.pending, (state: UserState) => {
-            state.status = "loading";
-        });
+        .addCase(authenticateUser.rejected, errorReducer)
+        .addCase(authenticateUser.pending, pendingReducer);
+
+        // CREATE USER
         builder.addCase(createUser.fulfilled, (state: UserState, action) => {
             state.status = "idle";
             state.username = action.payload;
             state.authenticated = true;
         })
-        .addCase(createUser.rejected, (state: UserState, action) => {
-            state.status = "error";
-            state.error = action.payload;
+        .addCase(createUser.rejected, errorReducer)
+        .addCase(createUser.pending, pendingReducer);
+
+        // DELETE USER 
+        builder.addCase(deleteUser.fulfilled, (state: UserState) => {
+            state.authenticated = false;
+            state.username = "";
+            state.status = "idle";
         })
-        .addCase(createUser.pending, (state: UserState) => {
-            state.status = "loading";
-        });
+        .addCase(deleteUser.rejected, errorReducer)
+        .addCase(deleteUser.pending, pendingReducer)
     }
 });
 
