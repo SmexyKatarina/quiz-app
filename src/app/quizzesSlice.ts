@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createAppSlice } from "../app/createAppSlice";
+import { createAppSlice } from "./createAppSlice";
+import { API } from "../bin/extras";
 
 export interface QuizState {
     quizzes: { [propName: number]: { quiz_name: string, quiz_category: number, username: string }},
@@ -16,8 +17,7 @@ const initialState: QuizState = {
 export const getAllQuizzes = createAsyncThunk(
     "quizzes/getAllQuizzes",
     async (_, { rejectWithValue }) => {
-        const json = await fetch("http://localhost:3001/quizzes")
-            .then(res => res.json());
+        const json = await API("quizzes");
         if (json.error) {
             return rejectWithValue(json.error);
         } else {

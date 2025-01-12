@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createAppSlice } from "../app/createAppSlice";
-import { error } from "console";
+import { createAppSlice } from "./createAppSlice";
+import { API } from "../bin/extras";
 
 export interface UserState {
     username: string,
@@ -34,8 +34,7 @@ const pendingReducer = (state: UserState, action: any) => {
 export const authenticateUser = createAsyncThunk(
     "users/authenticateUser",
     async ({username, password}: { username: string, password: string }, { rejectWithValue }) => {
-        const user = await fetch(`http://localhost:3001/users/getUser/`, { headers: { "Authorization": `Basic ${btoa(`${username}:${password}`)}` }})
-            .then(res => res.json());
+        const user = await API(`users/authUser/`, { headers: { "Authorization": `Basic ${btoa(`${username}:${password}`)}` }});
         if (user.error) {
             return rejectWithValue(user.error);
         } else {
@@ -48,16 +47,17 @@ export const createUser = createAsyncThunk(
     "users/createUser",
     async ({username, password}: { username: string, password: string}, { rejectWithValue }) => {
         const userObj = { username: username, password: password };
-        const users = await fetch(`http://localhost:3001/users/getUsers/`)
-            .then(res => res.json());
+        const users = await API(`users/getUsers`);
         if (users.error) {
             return rejectWithValue(users.error);
         } else if (users.usernames.includes(username)) {
             return rejectWithValue("Username already exists");
         } else {
-            const post = await fetch(`http://localhost:3001/users/createUser`, { 
-                method: "POST", body: JSON.stringify(userObj)
-            }).then(res => res.json());
+            const post = await API(`users/createUser`, { 
+                method: "POST", body: JSON.stringify(userObj), headers: {
+                    "Content-Type": "application/json"
+                }
+            });
             if (post.ok) {
                 return username;
             } else {
@@ -70,8 +70,7 @@ export const createUser = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
     "users/deleteUser",
     async ({username} : { username: string }, { rejectWithValue }) => {
-        const deleted = await fetch(`http://localhost:3001/users/deleteUser/${username}`)
-            .then(res => res.json());
+        const deleted = await API(`users/deleteUser/${username}`);
         if (deleted.error) {
             return rejectWithValue(deleted.error);
         } else {
