@@ -27,7 +27,7 @@ const Header = () => {
                 <h4 id="quiz-icon" onClick={() => { navigate("/"); }}>QuizIt</h4>
                 <h4 id="quizzes-button" onClick={() => { navigate("/quizzes"); }}>Quizzes</h4>  
                 <div id="user-info">
-                    <h4 id="header-profile">Profile</h4>
+                    <h4 id="header-profile" onClick={() => { navigate("/profile"); }}>Profile</h4>
                     <h4 id="login" onClick={() => { dispatch(userActions.deauthenticateUser()); }}>Logout</h4>
                 </div>
             </div>
