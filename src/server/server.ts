@@ -1,73 +1,18 @@
-import express, { Express, Request, Response, NextFunction } from "express";
-import { getUser, getAllUsers, deleteUser } from "./db/usersDb";
-import { getAllQuizzes } from "./db/quizzesDb";
+import express, { Express } from "express";
+
 import cors from "cors";
-import bcrypt from "bcrypt";
+
+import userRouter from './routes/usersRouter';
+import quizRouter from './routes/quizzesRouter';
+
 const app: Express = express();
 const port = 3001;
 
 app.use(cors());
+app.use(express.json());
 
-app.get("/quizzes", async (req: Request, res: Response, next: NextFunction) => {
-    const quizzes = await getAllQuizzes();
-    if (quizzes.count === 0) {
-        res.status(404).json({ error: "No quizzes found" });
-        return next();
-    }
-    res.status(200).json({ ...quizzes });
-    return next();
-})
-
-app.get("/users/getUsers/", async (req: Request, res: Response, next: NextFunction) => {
-    const users = await getAllUsers();
-
-    if (users.count === 0) {
-        res.status(404).json({ error: "No users found" });
-        return next();
-    }
-
-    res.status(200).json({
-        usernames: users
-    })
-    
-    return next();
-});
-
-app.get("/users/getUser/", async (req: Request, res: Response, next: NextFunction) => {
-    if (!req.headers.authorization) {
-        res.status(401).json({ error: "No credentials"});
-        return next();
-    }
-    const [username, password] = atob(req.headers.authorization.split(" ")[1]).split(":");
-    const user = await getUser(username);
-    console.log(user.state);
-    if (user.count === 0) {
-        res.status(401).json({ error: "No user found" });
-        return next();
-    }
-    const compare = await bcrypt.compare(password, user[0].password);
-    if (compare) {
-        res.status(200).json({ ...user });
-        return next();
-    } else {
-        res.status(401).json({ error: "Incorrect password" });
-        return next();
-    }
-})
-
-app.delete("/users/deleteUser/:username", async (req: Request, res: Response, next: NextFunction) => {
-    const username = req.params.username;
-    
-    const delUser = await deleteUser(username);
-    
-    if (delUser.count === 0) {
-        res.status(410).json({ error: "User doesn't exist" });
-        return next();
-    } else {
-        res.status(200).json({ message: "User has been deleted" });
-        return next();
-    }
-});
+app.use("/quizzes", quizRouter);
+app.use("/users", userRouter);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

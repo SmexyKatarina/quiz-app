@@ -29,6 +29,8 @@ export const createUser = async (username: string, password: string) => {
             users (username, password)
         VALUES 
             (${username}, ${password});
+        RETURNING
+            user_id;  
     `
     return res;
 }

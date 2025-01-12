@@ -14,3 +14,25 @@ export const getAllQuizzes = () => {
     `
     return res;
 }
+
+export const getUserQuizzes = (username: string) => {
+    const res = sql`
+        WITH 
+            user_ref(user_id) 
+        AS (
+	        SELECT 
+                user_id 
+            FROM 
+                users 
+            WHERE 
+                username = 'admin'
+        )
+        SELECT 
+            quiz_name, quiz_category 
+        FROM 
+            quizzes, user_ref 
+        WHERE 
+            quizzes.user_id = user_ref.user_id;
+    `
+    return res;
+}

@@ -34,6 +34,8 @@ const createUser = async (username, password) => {
             users (username, password)
         VALUES 
             (${username}, ${password});
+        RETURNING
+            user_id;  
     `;
     return res;
 };
