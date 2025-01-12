@@ -25,7 +25,7 @@ export const getUserQuizzes = (username: string) => {
             FROM 
                 users 
             WHERE 
-                username = 'admin'
+                username = ${username}
         )
         SELECT 
             quiz_name, quiz_category 
