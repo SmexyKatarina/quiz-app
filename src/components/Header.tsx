@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import '../css/Header.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { userActions } from "../slices/usersSlice";
+import { userActions } from "../app/usersSlice";
 
 const Header = () => {
     

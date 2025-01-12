@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 
 import '../css/Quizzes.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getAllQuizzes } from "../slices/quizzesSlice";
+import { getAllQuizzes } from "../app/quizzesSlice";
 
 const Quizzes = () => {
     
