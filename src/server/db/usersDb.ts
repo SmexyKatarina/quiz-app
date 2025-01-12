@@ -14,7 +14,8 @@ export const getUser = async (username: string) => {
     const res = await sql`
         SELECT
             username,
-            password
+            password,
+            permissions
         FROM 
             users
         WHERE 

@@ -1,19 +1,21 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "./createAppSlice";
 import { API } from "../bin/extras";
 
-export interface UserState {
-    username: string,
+export type UserState = {
+    username: string
     authenticated: boolean
-    status: "idle" | "loading" | "error",
+    status: "idle" | "loading" | "error"
     error: any
+    permissions: string[]
 }
 
 const initialState: UserState = {
     username: "admin",
     authenticated: true,
     status: "idle",
-    error: ""  
+    error: "",
+    permissions: ["ALL"]
 }
 /* const initialState: UserState = {
     username: "",
@@ -38,7 +40,7 @@ export const authenticateUser = createAsyncThunk(
         if (user.error) {
             return rejectWithValue(user.error);
         } else {
-            return user[0].username;
+            return { username: user[0].username, permissions: user[0].permissions.split(",")};
         }
     }
 );
@@ -92,8 +94,9 @@ export const userSlice = createAppSlice({
     extraReducers: builder => {
 
         // AUTHENTICATE USER
-        builder.addCase(authenticateUser.fulfilled, (state: UserState, action) => {
-            state.username = action.payload;
+        builder.addCase(authenticateUser.fulfilled, (state: UserState, action: PayloadAction<{ username: string, permissions: string[] }>) => {
+            state.username = action.payload.username;
+            state.permissions = action.payload.permissions;
             state.status = "idle";
             state.authenticated = true;
         })
