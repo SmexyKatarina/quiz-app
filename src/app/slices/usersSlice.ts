@@ -1,6 +1,6 @@
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { createAppSlice } from "./createAppSlice";
-import { API } from "../bin/extras";
+import { createAppSlice } from "../hooks/createAppSlice";
+import { API } from "../../bin/extras";
 
 export type UserState = {
     username: string
@@ -47,7 +47,7 @@ export const authenticateUser = createAsyncThunk(
 
 export const createUser = createAsyncThunk(
     "users/createUser",
-    async ({username, password}: { username: string, password: string}, { rejectWithValue }) => {
+    async ({username, password}: { username: string, password: string }, { rejectWithValue }) => {
         const userObj = { username: username, password: password };
         const users = await API(`users/getUsers`);
         if (users.error) {
@@ -71,7 +71,7 @@ export const createUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
     "users/deleteUser",
-    async ({username} : { username: string }, { rejectWithValue }) => {
+    async ({ username }: { username: string }, { rejectWithValue }) => {
         const deleted = await API(`users/deleteUser/${username}`);
         if (deleted.error) {
             return rejectWithValue(deleted.error);
