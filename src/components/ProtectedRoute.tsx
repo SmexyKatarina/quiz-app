@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../app/hooks/hooks";
 
 export type Authorization = {
     permissions: string[]
