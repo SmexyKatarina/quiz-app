@@ -7,8 +7,8 @@ import QuizTile from '../components/Quiz-Tile';
 import Footer from "../components/Footer";
 
 import '../css/Quizzes.css';
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getAllQuizzes } from "../app/quizzesSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks/hooks";
+import { getAllQuizzes } from "../app/slices/quizzesSlice";
 
 const Quizzes = () => {
     

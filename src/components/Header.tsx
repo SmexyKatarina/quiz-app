@@ -2,8 +2,8 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import '../css/Header.css';
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { userActions } from "../app/usersSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks/hooks";
+import { userActions } from "../app/slices/usersSlice";
 
 const Header = () => {
     

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { authenticateUser, createUser } from "../app/usersSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks/hooks";
+import { authenticateUser, createUser } from "../app/slices/usersSlice";
 import { useNavigate } from "react-router-dom";
 
 import '../css/Login.css';

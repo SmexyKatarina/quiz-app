@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 
 import '../css/Profile.css';
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../app/hooks/hooks";
 import { useParams } from "react-router-dom";
 
 const Profile = () => {
@@ -25,7 +25,7 @@ const Profile = () => {
                     
                     <div id="user-information">
                         {/* ADD icon here */}
-                        <div>${user.username}'s Profile</div>
+                        <div>{user.username}'s Profile</div>
                         {/* Potential options to add more details? Bio? Status? Created on? */}
                     </div>
                     <div className="vert-separator" />
