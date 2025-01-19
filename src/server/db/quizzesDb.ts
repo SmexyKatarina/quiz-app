@@ -15,6 +15,20 @@ export const getAllQuizzes = () => {
     return res;
 }
 
+export const getQuiz = (quiz_id: number) => {
+    const res = sql`
+        SELECT 
+            quizzes.quiz_id, quiz_name, question_id, question_text, answer_type, possible_answers 
+        FROM 
+            quizzes, questions
+        WHERE 
+            quizzes.quiz_id = ${quiz_id}
+        AND 
+            questions.quiz_id = ${quiz_id};
+    `;
+    return res;
+}
+
 export const getUserQuizzes = (username: string) => {
     const res = sql`
         WITH 
