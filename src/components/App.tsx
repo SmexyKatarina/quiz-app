@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from '../pages/Home';
 import Quizzes from '../pages/Quizzes';
+import Quiz from '../pages/Quiz';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
 import Error from '../pages/Error';
@@ -23,6 +24,11 @@ function App () {
           <Route path="profile" element={
               <ProtectedRoute permissions={["USER_PROFILE"]}>
                 <Profile />
+              </ProtectedRoute>
+          }/>
+          <Route path="quiz/:quiz_id" element={
+              <ProtectedRoute permissions={["QUIZ_SOLVER"]}>
+                <Quiz />
               </ProtectedRoute>
           }/>
           <Route path="profile/:username" element={<Profile />}/>
