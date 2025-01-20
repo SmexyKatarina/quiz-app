@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserQuizzes = exports.getAllQuizzes = void 0;
+exports.getUserQuizzes = exports.getQuiz = exports.getAllQuizzes = void 0;
 const db_1 = __importDefault(require("./db"));
 const getAllQuizzes = () => {
     const res = (0, db_1.default) `
@@ -20,6 +20,20 @@ const getAllQuizzes = () => {
     return res;
 };
 exports.getAllQuizzes = getAllQuizzes;
+const getQuiz = (quiz_id) => {
+    const res = (0, db_1.default) `
+        SELECT 
+            quizzes.quiz_id, quiz_name, question_id, question_text, answer_type, possible_answers 
+        FROM 
+            quizzes, questions
+        WHERE 
+            quizzes.quiz_id = ${quiz_id}
+        AND 
+            questions.quiz_id = ${quiz_id};
+    `;
+    return res;
+};
+exports.getQuiz = getQuiz;
 const getUserQuizzes = (username) => {
     const res = (0, db_1.default) `
         WITH 
@@ -30,7 +44,7 @@ const getUserQuizzes = (username) => {
             FROM 
                 users 
             WHERE 
-                username = 'admin'
+                username = ${username}
         )
         SELECT 
             quiz_name, quiz_category 

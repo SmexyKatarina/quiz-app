@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const usersDb_1 = require("../db/usersDb");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const router = express_1.default.Router();
+const router = express_1.default.Router({ mergeParams: true });
 router.get("/getUsers", async (req, res, next) => {
     const users = await (0, usersDb_1.getAllUsers)();
     if (users.count === 0) {

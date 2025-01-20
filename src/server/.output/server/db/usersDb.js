@@ -19,7 +19,8 @@ const getUser = async (username) => {
     const res = await (0, db_1.default) `
         SELECT
             username,
-            password
+            password,
+            permissions
         FROM 
             users
         WHERE 
