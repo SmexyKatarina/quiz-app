@@ -5,5 +5,9 @@
  * @returns The JSON response from the API
  */
 export const API = async (path: string, options?: {}) => {
-    return fetch(`http://localhost:3001/${path}`, { ...options }).then(res => res.json());
+    return await fetch(`http://localhost:3001/${path}`, { ...options }).then(res => res.json());
+}
+
+export const getLengthOfObject = (obj: {}) => {
+    return Object.keys(obj).length;
 }
