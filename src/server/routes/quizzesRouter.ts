@@ -4,7 +4,7 @@ import { getAllQuizzes, getQuiz } from "../db/quizzesDb";
 
 import { ActiveQuiz } from "../../app/slices/quizzesSlice";
 
-const router: Router = express.Router();
+const router: Router = express.Router({ mergeParams: true});
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     const quizzes = await getAllQuizzes();
@@ -16,8 +16,8 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     return next();
 });
 
-router.get("getQuiz/:quizId", async (req: Request, res: Response, next: NextFunction) => {
-    const quizData = await getQuiz(Number(req.params.quizId));
+router.get("/getQuiz/:quizId", async (req: Request, res: Response, next: NextFunction) => {
+    const quizData = await getQuiz(Number(req.params['quizId']));
     const obj: ActiveQuiz = {
         quiz_id: -1,
         quiz_name: "",

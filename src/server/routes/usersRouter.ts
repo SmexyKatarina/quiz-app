@@ -4,7 +4,7 @@ import { getUser, getAllUsers, deleteUser, createUser } from "../db/usersDb";
 
 import bcrypt from "bcrypt";
 
-const router: Router = express.Router();
+const router: Router = express.Router({ mergeParams: true });
 
 router.get("/getUsers", async (req: Request, res: Response, next: NextFunction) => {
     const users = await getAllUsers();
