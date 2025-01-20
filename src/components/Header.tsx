@@ -8,7 +8,7 @@ import { userActions } from "../app/slices/usersSlice";
 const Header = () => {
     
     const dispatch = useAppDispatch();
-    const state = useAppSelector(state => state.users);
+    const user = useAppSelector(state => state.users);
 
 
     const navigate = useNavigate();
@@ -21,7 +21,14 @@ const Header = () => {
                 <h4 id="login" onClick={() => { navigate("/"); }}>Back</h4>
             </div>
         );
-    } else if (state.authenticated) {
+    } else if (location.pathname.match(/\/quiz\/[0-9]+/g)?.[0]) {
+        return (
+            <div id="header">
+                <h4 id="quiz-icon" onClick={() => { navigate("/"); }}>QuizIt</h4>
+                <h4 id="login" onClick={() => { navigate(-1); }}>Back</h4>
+            </div>
+        )
+    } else if (user.authenticated) {
         return (
             <div id="header">
                 <h4 id="quiz-icon" onClick={() => { navigate("/"); }}>QuizIt</h4>
