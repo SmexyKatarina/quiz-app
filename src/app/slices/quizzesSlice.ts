@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../hooks/createAppSlice";
 import { API } from "../../bin/extras";
 
@@ -26,6 +26,15 @@ const initialState: QuizState = {
     error: ""
 }
 
+const errorReducer = (state: QuizState, action: any) => {
+    state.error = action.payload.error;
+    state.status = "error";
+}
+
+const pendingReducer = (state: QuizState) => {
+    state.status = "loading";
+}
+
 export const getAllQuizzes = createAsyncThunk(
     "quizzes/getAllQuizzes",
     async (_, { rejectWithValue }) => {
@@ -42,10 +51,11 @@ export const getQuizData = createAsyncThunk(
     "quizzes/getQuizData",
     async (quiz_id: number, { rejectWithValue }) => {
         const json = await API(`quizzes/getQuiz/${quiz_id}`);
+        
         if (json.error) {
             return rejectWithValue(json.error);
         } else {
-            return json;
+            return json.quiz;
         }
     }
 )
@@ -60,17 +70,15 @@ export const quizSlice = createAppSlice({
             state.quizzes = action.payload;
             state.status = "idle";
         })
-        .addCase(getAllQuizzes.rejected, (state: QuizState, action) => {
-            state.error = action.payload;
-            state.status = "error";
-        })
-        .addCase(getAllQuizzes.pending, (state: QuizState) => {
-            state.status = "loading";
-        })
+        .addCase(getAllQuizzes.rejected, errorReducer)
+        .addCase(getAllQuizzes.pending, pendingReducer)
 
-        builder.addCase(getQuizData.fulfilled, (state: QuizState, action) => {
-
+        builder.addCase(getQuizData.fulfilled, (state: QuizState, {payload}: PayloadAction<ActiveQuiz>) => {
+            state.activeQuiz = payload;
+            state.status = "idle";
         })
+        .addCase(getQuizData.rejected, errorReducer)
+        .addCase(getQuizData.pending, pendingReducer);
     }
 });
 
