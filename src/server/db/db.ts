@@ -1,7 +1,7 @@
 import postgres from "postgres";
 import env from "dotenv";
 
-env.config({ path: `${__dirname}/./../../../../.env`});
+env.config({ path: `${__dirname}/./../../../../../.env`});
 
 const sql = postgres({
     host: process.env.DBHOSTNAME,
