@@ -3,9 +3,70 @@
     background-color: rgb(240, 240, 240);
 }
 
+#quizzes-page-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.separator {
+    border-top: 1px solid black;
+    margin: 20px auto;
+    width: 50%;
+}
+
 #quizzes-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 10px;
+    width: 810px;
+    margin: 10px auto 0;
+}
+
+#selected-quiz {
+    max-height: 500px;
+    overflow: hidden;
+    display: flex;
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: solid gray;
+    background-color: lightgray;
+}
+
+.quiz-tile {
+    background-color: rgb(240, 240, 240);
+    border: 1px solid gray;
+    padding: 10px;
+    transition: all 0.25s;
+    width: 250px;
+    margin: 10px;
+    text-align: center;
+}
+
+.quiz-tile:hover {
+    background-color: white;
+    cursor: pointer;
+    padding: 15px;
+    border: 1px solid;
+    border-color: lightgray gray gray lightgray;
+    box-shadow: 10px 10px 20px 2px rgb(150, 150, 150)
+}
+
+.quiz-tile.quiz-selected {
+    background-color: rgb(132, 254, 179);
+    border-color: lightgreen darkgreen darkgreen lightgreen;
+    box-shadow: 10px 10px 20px 2px rgb(16, 149, 63);
+}
+
+.quiz-name {
+    font-size: 18px;
+}
+
+.quiz-info {
+    font-size: 12px;
+    font-style: italic;
+    color: gray;
 }
