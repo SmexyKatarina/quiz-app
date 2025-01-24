@@ -22,10 +22,9 @@ const Profile = () => {
             <div id="profile-page">
                 <Header />
                 <div id="profile-container">
-                    
                     <div id="user-information">
                         {/* ADD icon here */}
-                        <div>{user.username}'s Profile</div>
+                        <div>{username}'s Profile</div>
                         {/* Potential options to add more details? Bio? Status? Created on? */}
                     </div>
                     <div className="vert-separator" />
@@ -41,14 +40,14 @@ const Profile = () => {
         <div id="profile-page">
             <Header />
             <div id="profile-container">
-                
                 <div id="user-information">
                     {/* ADD icon here */}
-                    <div>${user.username}'s Profile</div>
+                    <h4>Your Profile</h4>
                     {/* Potential options to add more details? Bio? Status? Created on? */}
                 </div>
                 <div className="vert-separator" />
                 <div id="user-statistics">
+                    <h4>Statistics</h4>
                     {/* Quizzes created? Quizzes completed (number form)? Favorite Quizzes? */}
                 </div>
             </div>

@@ -1,0 +1,26 @@
+#profile-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 10px;
+    width: 70%;
+    height: 500px;
+    max-height: 500px;
+    border: 1px solid #e0ffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px 5px darkgray;
+}
+
+#profile-container > div:not(.vert-separator) {
+    padding: 10px;
+}
+
+.vert-separator {
+    height: 100%;
+    border-right: 1px solid black;
+    align-self: center;
+    justify-self: center;
+}
+
+
