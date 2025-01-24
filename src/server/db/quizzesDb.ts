@@ -3,7 +3,7 @@ import sql from "./db";
 export const getAllQuizzes = () => {
     const res = sql`
         SELECT 
-            quizzes.quiz_name, quizzes.quiz_category, users.username 
+            quizzes.quiz_id, quizzes.quiz_name, quizzes.quiz_category, users.username 
         FROM 
             quizzes
         INNER JOIN
