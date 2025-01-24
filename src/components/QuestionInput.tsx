@@ -23,7 +23,7 @@ const QuestionInput = (props:
     
     const { questionNumber, answerType, possibleAnswers, answers, setAnswer, submitClicked } = props;
 
-    const createInput = (value: any, index: number) => {
+    const createMultipleChoiceInput = (value: any, index: number) => {
         return (
             <div key={index}>
                 <input type="radio" id={`question-${questionNumber}-${index}`} name={`question-${questionNumber}`} value={value}/>
@@ -44,7 +44,7 @@ const QuestionInput = (props:
         case "MULTIPLE_CHOICE":
             return (
                 <div className="question-input answer-type-choice">
-                    {possibleAnswers.map((x, i) => { return createInput(x, i); })}
+                    {possibleAnswers.map((x, i) => { return createMultipleChoiceInput(x, i); })}
                     <p className={`answer-error ${(answers[questionNumber] ? answers[questionNumber].answered : false) && submitClicked ? "" : "hidden"}`}>Question is required to be answered.</p>  
                 </div>
             );
