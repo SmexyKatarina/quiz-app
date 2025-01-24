@@ -6,9 +6,10 @@
     border: 1px gray solid;
     border-top-color: lightgray;
     border-left-color: lightgray;
-    box-shadow: 0px 5px 10px 7px lightgray;
+    box-shadow: 0px 0px 10px 10px lightgray;
     margin: 20px;
     padding: 20px;
+    margin-bottom: 50px;
 }
 
 #quiz-content * {
@@ -22,6 +23,11 @@
 .question-input {
     display: flex;
     justify-content: center;
+}
+
+.question-input.answer-type-choice {
+    display: flex;
+    flex-direction: column;
 }
 
 .hidden {
