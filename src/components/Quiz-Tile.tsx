@@ -2,7 +2,8 @@ import React from "react";
 
 import '../css/Quizzes.css';
 
-const QuizTile = (props: { quizData: { quiz_name: string, quiz_category: number, username: string, id: number }, handleTileClick: ({currentTarget}: React.MouseEvent<HTMLDivElement, MouseEvent>, selectedQuiz: {
+const QuizTile = (props: { quizData: { quiz_id: number, quiz_name: string, quiz_category: number, username: string, id: number }, handleTileClick: ({currentTarget}: React.MouseEvent<HTMLDivElement, MouseEvent>, selectedQuiz: {
+    quiz_id: number
     quiz_name: string
     quiz_category: number
     username: string

@@ -3,7 +3,7 @@ import { createAppSlice } from "../hooks/createAppSlice";
 import { API } from "../../bin/extras";
 
 export type QuizState = {
-    quizzes: { [id: number]: { quiz_name: string, quiz_category: number, username: string }}
+    quizzes: { [id: number]: { quiz_id: number, quiz_name: string, quiz_category: number, username: string }}
     status: "idle" | "loading" | "error"
     activeQuiz: ActiveQuiz
     error: any

@@ -29,6 +29,8 @@
     max-height: 500px;
     overflow: hidden;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 50%;
     margin: 0 auto;
     padding: 20px;
@@ -59,6 +61,20 @@
     background-color: rgb(132, 254, 179);
     border-color: lightgreen darkgreen darkgreen lightgreen;
     box-shadow: 10px 10px 20px 2px rgb(16, 149, 63);
+}
+
+.selected-actions button {
+    padding: 5px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+    transition: all 0.1s linear;
+}
+
+.selected-actions button:hover {
+    border-radius: 0;
+    background-color: rgb(207, 254, 204);
+    cursor: pointer;
 }
 
 .quiz-name {

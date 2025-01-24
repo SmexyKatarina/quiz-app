@@ -9,18 +9,23 @@ import Footer from "../components/Footer";
 import '../css/Quizzes.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks/hooks";
 import { getAllQuizzes } from "../app/slices/quizzesSlice";
+import { useNavigate } from "react-router-dom";
 
 const Quizzes = () => {
     
+    const navigate = useNavigate();
+
     const dispatch = useAppDispatch();
-    const state = useAppSelector(state => state.quizzes)
+    const state = useAppSelector(state => state.quizzes);
 
     const [selectedQuiz, setSelectedQuiz] = useState<{
+        quiz_id: number
         quiz_name: string
         quiz_category: number
         username: string
         id: number
     }>({
+        quiz_id: -1,
         quiz_name: "",
         quiz_category: -1,
         username: "",
@@ -34,6 +39,7 @@ const Quizzes = () => {
     document.title = "Quizzes - QuizIt";
 
     const handleTileClick = (_: React.MouseEvent<HTMLDivElement, MouseEvent>, quiz_obj: {
+        quiz_id: number
         quiz_name: string
         quiz_category: number
         username: string
@@ -42,6 +48,7 @@ const Quizzes = () => {
         setSelectedQuiz(prev => {
             if (prev.id === quiz_obj.id) {
                 return {
+                    quiz_id: -1,
                     quiz_name: "",
                     quiz_category: -1,
                     username: "",
@@ -58,12 +65,14 @@ const Quizzes = () => {
             "maxHeight": "0", 
             "transition": "max-height 0s",
             "padding": "0",
-            "border-width": "0"
+            "borderWidth": "0",
+            "boxShadow": "none"
         }; else return { 
             "maxHeight": "500px", 
             "transition": "max-height 1.5s linear",
             "padding": "20px",
-            "border-width": "1px"
+            "borderWidth": "1px",
+            "boxShadow": "10px 10px 20px 5px darkgray"
         }
     }
 
@@ -105,8 +114,11 @@ const Quizzes = () => {
                     <div className="selected-statistics">
                         {/** Add some statistics for the quiz. Completion Rate? Average Grade if graded? # of questions? */}
                     </div>
+                    <div className="selected-actions">
+                        <button className="selected-complete" onClick={() => { navigate(`/quiz/${selectedQuiz.quiz_id}`); }}>Complete</button>
+                    </div>
                 </div>
-                <div className="separator"/>
+                {selectedQuiz.id === -1 ? <></> : <div className="separator"/>}
                 <div id="quizzes-container">
                     { Object.entries(state.quizzes).map(([_, value], i) => <QuizTile key={i} quizData={{ ...value, id: i}} handleTileClick={handleTileClick} selectedId={selectedQuiz.id}/>) }
                 </div>
