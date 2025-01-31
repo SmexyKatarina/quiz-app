@@ -15,6 +15,15 @@ export const getAllQuizzes = () => {
     return res;
 }
 
+export const createQuiz = (quiz_name: string, quiz_category: number, username: string) => {
+    const res = sql`
+        INSERT INTO 
+            quizzes (user_id, quiz_name, quiz_category) 
+        SELECT user_id, ${quiz_name}, ${quiz_category} FROM users WHERE 
+    `;
+    return res;
+}
+
 export const getQuiz = (quiz_id: number) => {
     const res = sql`
         SELECT 
@@ -31,22 +40,12 @@ export const getQuiz = (quiz_id: number) => {
 
 export const getUserQuizzes = (username: string) => {
     const res = sql`
-        WITH 
-            user_ref(user_id) 
-        AS (
-	        SELECT 
-                user_id 
-            FROM 
-                users 
-            WHERE 
-                username = ${username}
-        )
         SELECT 
             quiz_name, quiz_category 
         FROM 
-            quizzes, user_ref 
+            quizzes
         WHERE 
-            quizzes.user_id = user_ref.user_id;
+            quizzes.user_id = (SELECT user_id FROM users WHERE username = ${username});
     `
     return res;
 }
