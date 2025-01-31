@@ -1,12 +1,12 @@
 import express, { Request, Response, NextFunction, Router } from "express";
 
-import { getAllQuizzes, getQuiz } from "../db/quizzesDb";
+import { createQuiz, getAllQuizzes, getQuiz } from "../db/quizzesDb";
 
 import { ActiveQuiz } from "../../app/slices/quizzesSlice";
 
 const router: Router = express.Router({ mergeParams: true});
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", async (_: Request, res: Response, next: NextFunction) => {
     const quizzes = await getAllQuizzes();
     if (quizzes.count === 0) {
         res.status(404).json({ error: "No quizzes found" });
@@ -14,6 +14,15 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     }
     res.status(200).json({ ...quizzes });
     return next();
+});
+
+//Quiz functions
+
+router.post("/createQuiz", async (req: Request, res: Response, next: NextFunction) => {
+    const { quiz_name, quiz_category, username } = req.body;
+
+    const dbRes = await createQuiz(quiz_name, quiz_category, username);
+
 });
 
 router.get("/getQuiz/:quizId", async (req: Request, res: Response, next: NextFunction) => {
@@ -44,5 +53,7 @@ router.get("/getQuiz/:quizId", async (req: Request, res: Response, next: NextFun
     res.status(200).json({ quiz: obj });
     return next();
 });
+
+
 
 export default router;
